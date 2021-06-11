@@ -11,11 +11,15 @@ export class DashboardComponent implements OnInit {
   public canvas : any;
   public ctx;
   public datasets: any;
-  public data: any;
   public myChartData;
   public clicked = true;
   public clicked1 = false;
   public clicked2 = false;
+  public chart_labels = [];
+  public chartData = [];
+
+  counter = 0;
+
 
   events: SmeltingEvent[] = []
   state: SmeltingState = {
@@ -28,11 +32,15 @@ export class DashboardComponent implements OnInit {
     airVelocity: "",
     oxygenPercentage: "",
     airStreamIntensity: "",
+    heatLoss: ""
   }
 
   airVelocityChanged = false;
   oxygenPercentageChanged = false;
   airStreamIntensityChanged = false;
+  heatLossChanged = false;
+
+  initialized = false;
 
   constructor(private smeltingService: SmeltingService) {}
 
@@ -56,6 +64,15 @@ export class DashboardComponent implements OnInit {
         this.deltaState.oxygenPercentage = events[0].delta;
         this.oxygenPercentageChanged = true;
       }
+
+      if (this.initialized) {
+        this.addToChart()
+      } else {
+        events.forEach(event => this.addToChart())
+        this.initialized = true;
+      }
+
+      this.myChartData.update();
       this.events = events;
     })
 
@@ -108,16 +125,6 @@ export class DashboardComponent implements OnInit {
       }
     };
 
-    const chart_labels = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-    this.datasets = [
-      [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100],
-      [80, 120, 105, 110, 95, 105, 90, 100, 80, 95, 70, 120],
-      [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130]
-    ];
-    this.data = this.datasets[0];
-
-
-
     this.canvas = document.getElementById('chartBig1');
     this.ctx = this.canvas.getContext('2d');
 
@@ -130,7 +137,7 @@ export class DashboardComponent implements OnInit {
     const config = {
       type: 'line',
       data: {
-        labels: chart_labels,
+        labels: this.chart_labels,
         datasets: [{
           label: 'Strata Cieplna [MW]',
           fill: true,
@@ -146,7 +153,7 @@ export class DashboardComponent implements OnInit {
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
           pointRadius: 4,
-          data: this.data,
+          data: this.chartData,
         }]
       },
       options: gradientChartOptionsConfigurationWithTooltipRed
@@ -162,7 +169,7 @@ export class DashboardComponent implements OnInit {
 
 
   public updateOptions() {
-    this.myChartData.data.datasets[0].data = this.data;
+    this.myChartData.data.datasets[0].data = this.chartData;
     this.myChartData.update();
   }
 
@@ -174,6 +181,17 @@ export class DashboardComponent implements OnInit {
     } else {
       return ''
     }
+  }
+
+
+  private addToChart() {
+    this.chartData.push((Math.sin(this.counter*40)*30 + Math.cos(this.counter*10)*30 + 55).toFixed(2))
+    this.chart_labels.push(new Date().toLocaleTimeString())
+    if (this.chart_labels.length > 20) {
+      this.chartData.shift();
+      this.chart_labels.shift();
+    }
+    this.counter += 1;
   }
 
 }
