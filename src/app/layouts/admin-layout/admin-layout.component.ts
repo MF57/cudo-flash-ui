@@ -9,7 +9,7 @@ export class AdminLayoutComponent implements OnInit {
   public sidebarColor: string = "primary";
 
   constructor() {
-    this.changeSidebarColor(this.sidebarColor);
+    this.changeSidebarColor('primary');
   }
   changeSidebarColor(color){
     var sidebar = document.getElementsByClassName('sidebar')[0];
