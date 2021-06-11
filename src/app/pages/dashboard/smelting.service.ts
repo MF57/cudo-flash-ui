@@ -31,6 +31,12 @@ export class SmeltingService {
     },
   ]
 
+  state: SmeltingState = {
+    airVelocity: 52,
+    oxygenPercentage: 49,
+    airStreamIntensity: 2150,
+  }
+
   constructor() {
     for (let i = 0; i < 10; i++) {
       this.fakeEvents.push(this.generateFakeEvent())
@@ -55,11 +61,25 @@ export class SmeltingService {
   private generateFakeEvent() {
     const item = this.fakers[Math.floor(Math.random() * this.fakers.length)];
     const delta = (Math.random()*item.maxDelta);
-    const deltaString = (delta >= (item.maxDelta/2) ? '+' : '-') + delta.toFixed(2).toString() + ' ' + item.unit;
-    const min = Math.random() * (+(item.max-item.maxDelta) - +(item.min+item.maxDelta)) + +(item.min+item.maxDelta)
+    const deltaString = (Math.random() >= 0.5 ? '+' : '-') + delta.toFixed(2).toString() + ' ' + item.unit;
+    let min = 0;
+    if (item.parameter === "Prędkość podmuchu") {
+      min = this.state.airVelocity;
+    } else if (item.parameter === "Intensywność SPD") {
+      min = this.state.airStreamIntensity;
+    } else {
+      min = this.state.oxygenPercentage;
+    }
     const minString =  min.toFixed(2).toString() + ' ' + item.unit;
     const max = delta >= (item.maxDelta/2) ? min + delta : min - delta;
     const maxString = max.toFixed(2).toString() + ' ' + item.unit;
+    if (item.parameter === "Prędkość podmuchu") {
+      this.state.airVelocity = max;
+    } else if (item.parameter === "Intensywność SPD") {
+      this.state.airStreamIntensity = max;
+    } else {
+      this.state.oxygenPercentage = max;
+    }
     return {
       parameter: item.parameter,
       date: new Date().toLocaleString(),

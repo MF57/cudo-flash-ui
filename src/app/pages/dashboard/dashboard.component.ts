@@ -42,17 +42,17 @@ export class DashboardComponent implements OnInit {
       this.oxygenPercentageChanged = false;
       this.airStreamIntensityChanged = false;
       if (events[0].parameter === "Prędkość podmuchu") {
-        this.state.airVelocity = events[0].newValue.split(" ")[0] as number;
+        this.state.airVelocity = +events[0].newValue.split(" ")[0];
         this.deltaState.airVelocity = events[0].delta;
         this.airVelocityChanged = true;
       }
       if (events[0].parameter === "Intensywność SPD") {
-        this.state.airStreamIntensity = events[0].newValue.split(" ")[0] as number;
+        this.state.airStreamIntensity = +events[0].newValue.split(" ")[0];
         this.deltaState.airStreamIntensity = events[0].delta;
         this.airStreamIntensityChanged = true;
       }
       if (events[0].parameter === "Stężenie tlenu") {
-        this.state.oxygenPercentage = events[0].newValue.split(" ")[0] as number;
+        this.state.oxygenPercentage = +events[0].newValue.split(" ")[0];
         this.deltaState.oxygenPercentage = events[0].delta;
         this.oxygenPercentageChanged = true;
       }
