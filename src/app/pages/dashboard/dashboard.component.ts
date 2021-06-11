@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
-import {SmeltingEvent, SmeltingService} from './smelting.service';
+import {SmeltingEvent, SmeltingService, SmeltingState} from './smelting.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,11 +18,44 @@ export class DashboardComponent implements OnInit {
   public clicked2 = false;
 
   events: SmeltingEvent[] = []
+  state: SmeltingState = {
+    airVelocity: 52,
+    oxygenPercentage: 49,
+    airStreamIntensity: 2150,
+  }
+
+  deltaState: any = {
+    airVelocity: "",
+    oxygenPercentage: "",
+    airStreamIntensity: "",
+  }
+
+  airVelocityChanged = false;
+  oxygenPercentageChanged = false;
+  airStreamIntensityChanged = false;
 
   constructor(private smeltingService: SmeltingService) {}
 
   ngOnInit() {
     this.smeltingService.getSmeltingEvents().subscribe(events => {
+      this.airVelocityChanged = false;
+      this.oxygenPercentageChanged = false;
+      this.airStreamIntensityChanged = false;
+      if (events[0].parameter === "Prędkość podmuchu") {
+        this.state.airVelocity = events[0].newValue.split(" ")[0] as number;
+        this.deltaState.airVelocity = events[0].delta;
+        this.airVelocityChanged = true;
+      }
+      if (events[0].parameter === "Intensywność SPD") {
+        this.state.airStreamIntensity = events[0].newValue.split(" ")[0] as number;
+        this.deltaState.airStreamIntensity = events[0].delta;
+        this.airStreamIntensityChanged = true;
+      }
+      if (events[0].parameter === "Stężenie tlenu") {
+        this.state.oxygenPercentage = events[0].newValue.split(" ")[0] as number;
+        this.deltaState.oxygenPercentage = events[0].delta;
+        this.oxygenPercentageChanged = true;
+      }
       this.events = events;
     })
 

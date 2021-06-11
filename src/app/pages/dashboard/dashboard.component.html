@@ -1,6 +1,47 @@
 <div class=" content">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Stan pieca zawiesinowego</h2>
+          <div class="variables">
+            <div class="variables-wrapper">
+              <div class="value-wrapper">
+                <div class="value-name">Prędkość Dmuchu</div>
+                <div class="value-value">{{state.airVelocity + " m/s"}}</div>
+              </div>
+              <div class="value-wrapper">
+                <div class="value-name">Intensywność SPD</div>
+                <div class="value-value">{{state.airStreamIntensity + " Nm^3/h"}}</div>
+              </div>
+              <div class="value-wrapper">
+                <div class="value-name">Zawartość tlenu</div>
+                <div class="value-value">{{state.oxygenPercentage + " %"}}</div>
+              </div>
+            </div>
+            <div class="deltas-wrapper">
+              <div class="delta" [ngClass]="{'recently-changed': airVelocityChanged,
+              'plus': deltaState.airVelocity.startsWith('+'),
+              'minus': deltaState.airVelocity.startsWith('-')}">{{deltaState.airVelocity}}</div>
+              <div class="delta" [ngClass]="{'recently-changed': airStreamIntensityChanged,
+              'plus': deltaState.airStreamIntensity.startsWith('+'),
+              'minus': deltaState.airStreamIntensity.startsWith('-')}">{{deltaState.airStreamIntensity}}</div>
+              <div class="delta" [ngClass]="{'recently-changed': oxygenPercentageChanged,
+              'plus': deltaState.oxygenPercentage.startsWith('+'),
+              'minus': deltaState.oxygenPercentage.startsWith('-')}">{{deltaState.oxygenPercentage}}</div>
+            </div>
+          </div>
+<!--          <div class="diagram-wrapper">-->
+<!--            <img class="diagram" src="assets/img/pobrane.png">-->
+<!--          </div>-->
+        </div>
+        <div class=" card-body">
+        </div>
+    </div>
+    </div>
+  </div>
   <div class=" row">
-    <div class=" col-12">
+    <div class="col-12">
       <div class=" card card-chart">
         <div class=" card-header">
           <div class=" row">
@@ -10,7 +51,7 @@
           </div>
         </div>
         <div class=" card-body">
-          <div class=" chart-area">
+          <div class="chart-area">
             <canvas id="chartBig1"></canvas>
           </div>
         </div>

@@ -3,10 +3,56 @@ $orange:  #fb6340 !default;
 $yellow:  #ffd600 !default;
 $green:   #2dce89 !default;
 
-tr td.plus {
+tr td.plus, .plus {
   color: $green !important;
 }
 
-tr td.minus {
+tr td.minus, .minus {
   color: $red !important;
+}
+
+
+.diagram-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+img.diagram {
+  margin: 50px auto 50px auto;
+  width: 500px;
+  height: 500px;
+}
+
+.variables {
+  display: flex;
+}
+
+.value-wrapper {
+  margin: 10px;
+}
+
+.value-name {
+  font-size: 20px;
+  text-align: right;
+}
+.value-value {
+  text-align: right;
+}
+
+.delta {
+  margin: 10px 0 10px 30px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 30px;
+  opacity: 0;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -ms-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+}
+
+.delta.recently-changed {
+  opacity: 1;
 }

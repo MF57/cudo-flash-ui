@@ -13,7 +13,7 @@ export class SmeltingService {
       min: 40,
       max: 70,
       maxDelta: 2,
-      unit: 'Nm^3/h'
+      unit: 'm/s'
     },
     {
       parameter: 'Intensywność SPD',
@@ -39,7 +39,7 @@ export class SmeltingService {
 
 
   getSmeltingEvents(): Observable<SmeltingEvent[]> {
-    return interval(2000).pipe(
+    return timer(0, 2000).pipe(
       map(() => {
         this.updateFakeEvents()
         return this.fakeEvents
@@ -77,4 +77,10 @@ export interface SmeltingEvent {
   oldValue: string
   newValue: string
   delta: string
+}
+
+export interface SmeltingState {
+  airVelocity: number;
+  oxygenPercentage: number;
+  airStreamIntensity: number;
 }
