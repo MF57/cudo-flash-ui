@@ -50,7 +50,7 @@ export class SmeltingService {
 
   changeExpectedValue(newValue: number) {
     if (environment.production) {
-      this.httpClient.post('https://cudo.tegess.com/expectedValue', {
+      this.httpClient.post('https://tegess.com/expectedValue', {
         value: newValue
       }).subscribe(() => {
         console.log('Value changed')
@@ -74,7 +74,7 @@ export class SmeltingService {
     if (environment.production) {
       return timer(0, 1000).pipe(
         switchMap(() => {
-            return this.httpClient.get<HeatlossState>('https://cudo.tegess.com/current', {responseType: 'json'})
+            return this.httpClient.get<HeatlossState>('https://tegess.com/current', {responseType: 'json'})
           }
         )
       )
