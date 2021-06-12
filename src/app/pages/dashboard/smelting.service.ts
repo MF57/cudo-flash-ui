@@ -10,7 +10,7 @@ export class SmeltingService {
   fakeEvents = []
 
   counter = 0;
-  expectedHeatlossValue = 50;
+  expectedHeatlossValue = 24.2;
 
   fakers = [
     {
@@ -131,6 +131,18 @@ export class SmeltingService {
       delta: deltaString,
     }
   }
+
+  start() {
+    this.httpClient.get('https://tegess.com/start').subscribe(() =>{
+      console.log("Simulation started")
+    })
+  }
+
+  stop() {
+    this.httpClient.get('https://tegess.com/stop').subscribe(() => {
+      console.log("Simulation stopped")
+    })
+  }
 }
 
 
@@ -152,9 +164,7 @@ export interface SmeltingState {
 export interface HeatlossState {
   total: number;
   s100: number;
-  s200: number;
   s300: number;
-  s400: number;
   s500: number;
   s600: number;
 }

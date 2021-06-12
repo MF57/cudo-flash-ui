@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit {
 
   initialized = false;
 
-  expectedValue = 56;
+  expectedValue = 24.2;
   tmpExpectedValue = this.expectedValue;
   expectedValueEdit = false;
 
@@ -110,8 +110,8 @@ export class DashboardComponent implements OnInit {
             zeroLineColor: 'transparent',
           },
           ticks: {
-            suggestedMin: 60,
-            suggestedMax: 125,
+            suggestedMin: 0,
+            suggestedMax: 50,
             padding: 20,
             fontColor: '#9a9a9a'
           }
@@ -223,5 +223,13 @@ export class DashboardComponent implements OnInit {
     this.expectedValue = +this.tmpExpectedValue;
     this.smeltingService.changeExpectedValue(this.expectedValue);
     this.expectedValueEdit = false;
+  }
+
+  start() {
+    this.smeltingService.start();
+  }
+
+  stop() {
+    this.smeltingService.stop();
   }
 }
