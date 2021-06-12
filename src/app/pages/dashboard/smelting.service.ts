@@ -10,7 +10,7 @@ export class SmeltingService {
   fakeEvents = []
 
   counter = 0;
-  expectedHeatlossValue = 24.2;
+  expectedHeatlossValue = 22;
 
   fakers = [
     {
@@ -96,6 +96,18 @@ export class SmeltingService {
     }
   }
 
+
+  getSmeltingState(): Observable<SmeltingState> {
+    if (environment.production) {
+      return timer(0, 1000).pipe(
+        switchMap(() => {
+            return this.httpClient.get<SmeltingState>('https://tegess.com/variables', {responseType: 'json'})
+          }
+        )
+      )
+    }
+  }
+
   private updateFakeEvents() {
     this.fakeEvents.pop()
     this.fakeEvents.unshift(this.generateFakeEvent())
@@ -133,7 +145,7 @@ export class SmeltingService {
   }
 
   start() {
-    this.httpClient.get('https://tegess.com/start').subscribe(() =>{
+    this.httpClient.get('https://tegess.com/start/'+this.expectedHeatlossValue).subscribe(() =>{
       console.log("Simulation started")
     })
   }

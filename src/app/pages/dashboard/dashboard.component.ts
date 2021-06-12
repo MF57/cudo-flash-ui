@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit {
 
   initialized = false;
 
-  expectedValue = 24.2;
+  expectedValue = 22;
   tmpExpectedValue = this.expectedValue;
   expectedValueEdit = false;
 
@@ -59,28 +59,31 @@ export class DashboardComponent implements OnInit {
       }
     })
 
-
-
-    this.smeltingService.getSmeltingEvents().subscribe(events => {
+    this.smeltingService.getSmeltingState().subscribe(state => {
       this.airVelocityChanged = false;
       this.oxygenPercentageChanged = false;
       this.airStreamIntensityChanged = false;
-      if (events[0].parameter === 'Prędkość podmuchu') {
-        this.state.airVelocity = +events[0].newValue.split(' ')[0];
-        this.deltaState.airVelocity = events[0].delta;
+      if (this.state.airVelocity !== state.airVelocity) {
+        const sign = this.state.airVelocity < state.airVelocity ? '+' : '-';
+        this.deltaState.airVelocity = sign + Math.abs(this.state.airVelocity - state.airVelocity) + ' m/s'
         this.airVelocityChanged = true;
       }
-      if (events[0].parameter === 'Intensywność SPD') {
-        this.state.airStreamIntensity = +events[0].newValue.split(' ')[0];
-        this.deltaState.airStreamIntensity = events[0].delta;
+      if (this.state.airStreamIntensity !== state.airStreamIntensity) {
+        const sign = this.state.airStreamIntensity < state.airStreamIntensity ? '+' : '-';
+        this.deltaState.airStreamIntensity = sign + Math.abs(this.state.airStreamIntensity - state.airStreamIntensity) + ' Nm^3/h'
         this.airStreamIntensityChanged = true;
       }
-      if (events[0].parameter === 'Stężenie tlenu') {
-        this.state.oxygenPercentage = +events[0].newValue.split(' ')[0];
-        this.deltaState.oxygenPercentage = events[0].delta;
+      if (this.state.oxygenPercentage !== state.oxygenPercentage) {
+        const sign = this.state.oxygenPercentage < state.oxygenPercentage ? '+' : '-';
+        this.deltaState.oxygenPercentage = sign + Math.abs(this.state.oxygenPercentage - state.oxygenPercentage) + ' %'
         this.oxygenPercentageChanged = true;
       }
+      this.state = state;
+    })
 
+
+
+    this.smeltingService.getSmeltingEvents().subscribe(events => {
       this.events = events;
     })
 
