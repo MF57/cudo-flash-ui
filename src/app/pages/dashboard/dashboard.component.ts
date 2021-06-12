@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   public clicked2 = false;
   public chart_labels = [];
   public chartData = [];
+  public expectedValueChartData = []
 
   counter = 0;
 
@@ -42,7 +43,8 @@ export class DashboardComponent implements OnInit {
 
   initialized = false;
 
-  expectedValue = 34;
+  expectedValue = 56;
+  tmpExpectedValue = this.expectedValue;
   expectedValueEdit = false;
 
   constructor(private smeltingService: SmeltingService) {}
@@ -112,7 +114,6 @@ export class DashboardComponent implements OnInit {
             fontColor: '#9a9a9a'
           }
         }],
-
         xAxes: [{
           barPercentage: 1.6,
           gridLines: {
@@ -137,6 +138,9 @@ export class DashboardComponent implements OnInit {
     gradientStroke.addColorStop(0.4, 'rgba(233,32,16,0.0)');
     gradientStroke.addColorStop(0, 'rgba(233,32,16,0)'); // red colors
 
+
+
+
     const config = {
       type: 'line',
       data: {
@@ -157,19 +161,29 @@ export class DashboardComponent implements OnInit {
           pointHoverBorderWidth: 15,
           pointRadius: 4,
           data: this.chartData,
-        }]
+        },
+          {
+            label: 'Wartość oczekiwana',
+            fill: true,
+            borderColor: '#0040ff',
+            borderWidth: 2,
+            borderDash: [10,5],
+            borderDashOffset: 0.0,
+            pointBackgroundColor: '#0361d0',
+            pointBorderColor: 'rgba(255,255,255,0)',
+            pointHoverBackgroundColor: '#0d23ec',
+            pointBorderWidth: 20,
+            pointHoverRadius: 4,
+            pointHoverBorderWidth: 15,
+            pointRadius: 4,
+            data: this.expectedValueChartData,
+          }
+        ]
       },
       options: gradientChartOptionsConfigurationWithTooltipRed
     };
     this.myChartData = new Chart(this.ctx, config);
-
-
-
   }
-
-
-
-
 
   public updateOptions() {
     this.myChartData.data.datasets[0].data = this.chartData;
@@ -188,20 +202,24 @@ export class DashboardComponent implements OnInit {
 
 
   private addToChart() {
-    this.chartData.push((Math.sin(this.counter*40)*30 + Math.cos(this.counter*10)*30 + 55).toFixed(2))
+    this.chartData.push((Math.sin(this.counter*40)*30 + Math.cos(this.counter*10)*30 + this.expectedValue).toFixed(2))
+    this.expectedValueChartData.push(this.expectedValue);
     this.chart_labels.push(new Date().toLocaleTimeString())
     if (this.chart_labels.length > 20) {
       this.chartData.shift();
       this.chart_labels.shift();
+      this.expectedValueChartData.shift();
     }
     this.counter += 1;
   }
 
   editExpectedValue() {
+    this.tmpExpectedValue = this.expectedValue;
     this.expectedValueEdit = true;
   }
 
   confirmExpectedValue() {
+    this.expectedValue = +this.tmpExpectedValue;
     this.expectedValueEdit = false;
   }
 }
