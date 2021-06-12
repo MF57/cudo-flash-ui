@@ -104,9 +104,9 @@ export class SmeltingService {
             return this.httpClient.get<SmeltingApiResponse>('https://tegess.com/currentSetValues', {responseType: 'json'})
               .pipe(map(resp => {
                 return {
-                  airVelocity: resp.values[0],
-                  oxygenPercentage: resp.values[1],
-                  airStreamIntensity: resp.values[2]
+                  airVelocity: (Math.round(resp.values[0] * 100) / 100),
+                  oxygenPercentage: (Math.round(resp.values[1] * 100) / 100),
+                  airStreamIntensity: (Math.round(resp.values[2] * 100) / 100)
                 }
               }))
           }
