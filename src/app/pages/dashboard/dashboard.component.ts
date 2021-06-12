@@ -52,10 +52,11 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
 
     this.smeltingService.getHeatlossState().subscribe(state => {
-      this.heatlossState = state;
-      this.addToChart(state.total);
-      this.myChartData.update();
-
+      if (!!state) {
+        this.heatlossState = state;
+        this.addToChart(state.total);
+        this.myChartData.update();
+      }
     })
 
 
