@@ -34,6 +34,7 @@ img.diagram {
 
 .value-wrapper {
   margin: 10px;
+  height: 50px;
 }
 
 .value-name {
@@ -42,13 +43,6 @@ img.diagram {
 }
 .value-value {
   text-align: right;
-}
-
-.delta {
-  margin: 10px 0 10px 30px;
-  height: 50px;
-  line-height: 50px;
-  font-size: 30px;
   opacity: 0;
   -webkit-transition: opacity 1s ease-in-out;
   -moz-transition: opacity 1s ease-in-out;
@@ -56,7 +50,14 @@ img.diagram {
   -o-transition: opacity 1s ease-in-out;
 }
 
-.delta.recently-changed {
+.delta {
+  margin: 10px 0 10px 30px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 30px;
+}
+
+.value-value.recently-changed {
   opacity: 1;
 }
 

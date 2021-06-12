@@ -8,27 +8,27 @@
             <div class="variables-wrapper">
               <div class="value-wrapper">
                 <div class="value-name">Prędkość Dmuchu</div>
-                <div class="value-value">{{state.airVelocity + " m/s"}}</div>
+                <div class="value-value" [ngClass]="{'recently-changed': airVelocityChanged,
+              'plus': deltaState.airVelocity.startsWith('+'),
+              'minus': deltaState.airVelocity.startsWith('-')}">{{deltaState.airVelocity}}</div>
               </div>
               <div class="value-wrapper">
                 <div class="value-name">Intensywność SPD</div>
-                <div class="value-value">{{state.airStreamIntensity + " Nm^3/h"}}</div>
+                <div class="value-value" [ngClass]="{'recently-changed': airStreamIntensityChanged,
+              'plus': deltaState.airStreamIntensity.startsWith('+'),
+              'minus': deltaState.airStreamIntensity.startsWith('-')}">{{deltaState.airStreamIntensity}}</div>
               </div>
               <div class="value-wrapper">
                 <div class="value-name">Zawartość tlenu</div>
-                <div class="value-value">{{state.oxygenPercentage + " %"}}</div>
+                <div class="value-value" [ngClass]="{'recently-changed': oxygenPercentageChanged,
+              'plus': deltaState.oxygenPercentage.startsWith('+'),
+              'minus': deltaState.oxygenPercentage.startsWith('-')}">{{deltaState.oxygenPercentage}}</div>
               </div>
             </div>
             <div class="deltas-wrapper">
-              <div class="delta" [ngClass]="{'recently-changed': airVelocityChanged,
-              'plus': deltaState.airVelocity.startsWith('+'),
-              'minus': deltaState.airVelocity.startsWith('-')}">{{deltaState.airVelocity}}</div>
-              <div class="delta" [ngClass]="{'recently-changed': airStreamIntensityChanged,
-              'plus': deltaState.airStreamIntensity.startsWith('+'),
-              'minus': deltaState.airStreamIntensity.startsWith('-')}">{{deltaState.airStreamIntensity}}</div>
-              <div class="delta" [ngClass]="{'recently-changed': oxygenPercentageChanged,
-              'plus': deltaState.oxygenPercentage.startsWith('+'),
-              'minus': deltaState.oxygenPercentage.startsWith('-')}">{{deltaState.oxygenPercentage}}</div>
+              <div class="delta">{{state.airVelocity + " m/s"}}</div>
+              <div class="delta">{{state.airStreamIntensity + " Nm^3/h"}}</div>
+              <div class="delta" >{{state.oxygenPercentage + " %"}}</div>
             </div>
           </div>
 <!--          <div class="diagram-wrapper">-->
