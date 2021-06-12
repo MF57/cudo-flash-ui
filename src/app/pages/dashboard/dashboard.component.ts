@@ -111,8 +111,8 @@ export class DashboardComponent implements OnInit {
             zeroLineColor: 'transparent',
           },
           ticks: {
-            suggestedMin: 0,
-            suggestedMax: 50,
+            suggestedMin: 20,
+            suggestedMax: 30,
             padding: 20,
             fontColor: '#9a9a9a'
           }
