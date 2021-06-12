@@ -42,6 +42,9 @@ export class DashboardComponent implements OnInit {
 
   initialized = false;
 
+  expectedValue = 34;
+  expectedValueEdit = false;
+
   constructor(private smeltingService: SmeltingService) {}
 
   ngOnInit() {
@@ -194,4 +197,11 @@ export class DashboardComponent implements OnInit {
     this.counter += 1;
   }
 
+  editExpectedValue() {
+    this.expectedValueEdit = true;
+  }
+
+  confirmExpectedValue() {
+    this.expectedValueEdit = false;
+  }
 }

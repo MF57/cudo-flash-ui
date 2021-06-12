@@ -25,6 +25,9 @@ img.diagram {
   height: 500px;
 }
 
+
+//Variables in main diagram
+
 .variables {
   display: flex;
 }
@@ -55,4 +58,28 @@ img.diagram {
 
 .delta.recently-changed {
   opacity: 1;
+}
+
+
+
+
+// EXPECTED VALUE
+
+.tim-icons {
+  cursor: pointer;
+}
+
+.expected-value-wrapper {
+   display: flex;
+  align-items: center;
+
+  input {
+    width: 75px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  i {
+    margin-left: 20px;
+  }
 }
