@@ -50,7 +50,7 @@ export class SmeltingService {
 
   changeExpectedValue(newValue: number) {
     if (environment.production) {
-      this.httpClient.post('https://34.105.241.43:2137/expectedValue', {
+      this.httpClient.post('https://cors-anywhere.herokuapp.com/http://34.105.241.43:2137/expectedValue', {
         value: newValue
       }).subscribe(() => {
         console.log('Value changed')
@@ -74,7 +74,7 @@ export class SmeltingService {
     if (environment.production) {
       return timer(0, 500).pipe(
         switchMap(() => {
-            return this.httpClient.get<HeatlossState>('https://34.105.241.43:2137/current', {responseType: 'json'})
+            return this.httpClient.get<HeatlossState>('https://cors-anywhere.herokuapp.com/http://34.105.241.43:2137/current', {responseType: 'json'})
           }
         )
       )
