@@ -79,7 +79,7 @@ export class SmeltingService {
         )
       )
     } else {
-      return timer(0, 500).pipe(
+      return timer(0, 1000).pipe(
         map(() => {
           this.counter += 1;
           return {

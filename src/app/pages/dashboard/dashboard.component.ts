@@ -165,7 +165,7 @@ export class DashboardComponent implements OnInit {
           data: this.chartData,
         },
           {
-            label: 'Wartość oczekiwana',
+            label: 'Wartość zadana',
             fill: true,
             borderColor: '#0040ff',
             borderWidth: 2,
