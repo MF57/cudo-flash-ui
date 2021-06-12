@@ -93,6 +93,30 @@ img.diagram {
 
 
 
+
+
+
+
+
+.heat-loss-wrapper {
+  border: 1px solid white;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.heat-loss-total {
+  font-size: 16px;
+  padding: 5px;
+  border-bottom: 1px solid white;
+}
+.heat-loss-ring {
+  padding: 2px;
+}
+
+
+
+
 // EXPECTED VALUE
 
 .tim-icons {

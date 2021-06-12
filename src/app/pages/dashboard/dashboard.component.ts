@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
-import {SmeltingEvent, SmeltingService, SmeltingState} from './smelting.service';
+import {HeatlossState, SmeltingEvent, SmeltingService, SmeltingState} from './smelting.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +19,6 @@ export class DashboardComponent implements OnInit {
   public chartData = [];
   public expectedValueChartData = []
 
-  counter = 0;
 
 
   events: SmeltingEvent[] = []
@@ -30,10 +29,9 @@ export class DashboardComponent implements OnInit {
   }
 
   deltaState: any = {
-    airVelocity: "",
-    oxygenPercentage: "",
-    airStreamIntensity: "",
-    heatLoss: ""
+    airVelocity: '',
+    oxygenPercentage: '',
+    airStreamIntensity: '',
   }
 
   airVelocityChanged = false;
@@ -47,37 +45,41 @@ export class DashboardComponent implements OnInit {
   tmpExpectedValue = this.expectedValue;
   expectedValueEdit = false;
 
+  heatlossState: HeatlossState;
+
   constructor(private smeltingService: SmeltingService) {}
 
   ngOnInit() {
+
+    this.smeltingService.getHeatlossEvent().subscribe(state => {
+      this.heatlossState = state;
+      this.addToChart(state.total);
+      this.myChartData.update();
+
+    })
+
+
+
     this.smeltingService.getSmeltingEvents().subscribe(events => {
       this.airVelocityChanged = false;
       this.oxygenPercentageChanged = false;
       this.airStreamIntensityChanged = false;
-      if (events[0].parameter === "Prędkość podmuchu") {
-        this.state.airVelocity = +events[0].newValue.split(" ")[0];
+      if (events[0].parameter === 'Prędkość podmuchu') {
+        this.state.airVelocity = +events[0].newValue.split(' ')[0];
         this.deltaState.airVelocity = events[0].delta;
         this.airVelocityChanged = true;
       }
-      if (events[0].parameter === "Intensywność SPD") {
-        this.state.airStreamIntensity = +events[0].newValue.split(" ")[0];
+      if (events[0].parameter === 'Intensywność SPD') {
+        this.state.airStreamIntensity = +events[0].newValue.split(' ')[0];
         this.deltaState.airStreamIntensity = events[0].delta;
         this.airStreamIntensityChanged = true;
       }
-      if (events[0].parameter === "Stężenie tlenu") {
-        this.state.oxygenPercentage = +events[0].newValue.split(" ")[0];
+      if (events[0].parameter === 'Stężenie tlenu') {
+        this.state.oxygenPercentage = +events[0].newValue.split(' ')[0];
         this.deltaState.oxygenPercentage = events[0].delta;
         this.oxygenPercentageChanged = true;
       }
 
-      if (this.initialized) {
-        this.addToChart()
-      } else {
-        events.forEach(event => this.addToChart())
-        this.initialized = true;
-      }
-
-      this.myChartData.update();
       this.events = events;
     })
 
@@ -201,8 +203,8 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  private addToChart() {
-    this.chartData.push((Math.sin(this.counter*40)*30 + Math.cos(this.counter*10)*30 + this.expectedValue).toFixed(2))
+  private addToChart(value: number) {
+    this.chartData.push(value.toFixed(2))
     this.expectedValueChartData.push(this.expectedValue);
     this.chart_labels.push(new Date().toLocaleTimeString())
     if (this.chart_labels.length > 20) {
@@ -210,7 +212,6 @@ export class DashboardComponent implements OnInit {
       this.chart_labels.shift();
       this.expectedValueChartData.shift();
     }
-    this.counter += 1;
   }
 
   editExpectedValue() {
@@ -220,6 +221,7 @@ export class DashboardComponent implements OnInit {
 
   confirmExpectedValue() {
     this.expectedValue = +this.tmpExpectedValue;
+    this.smeltingService.changeExpectedValue(this.expectedValue);
     this.expectedValueEdit = false;
   }
 }
