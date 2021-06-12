@@ -65,27 +65,46 @@ export class DashboardComponent implements OnInit {
       this.airStreamIntensityChanged = false;
       if (this.state.airVelocity !== state.airVelocity) {
         const sign = this.state.airVelocity < state.airVelocity ? '+' : '-';
-        this.deltaState.airVelocity = sign + Math.abs(this.state.airVelocity - state.airVelocity) + ' m/s'
+        const delta = sign + Math.abs(this.state.airVelocity - state.airVelocity) + ' m/s';
+        this.deltaState.airVelocity = delta
         this.airVelocityChanged = true;
+        this.events.push({
+          parameter: "Prędkość podmuchu",
+          date: new Date().toLocaleString(),
+          oldValue: this.state.airVelocity.toFixed(2),
+          newValue: state.airVelocity.toFixed(2),
+          delta: delta
+        })
       }
       if (this.state.airStreamIntensity !== state.airStreamIntensity) {
         const sign = this.state.airStreamIntensity < state.airStreamIntensity ? '+' : '-';
-        this.deltaState.airStreamIntensity = sign + Math.abs(this.state.airStreamIntensity - state.airStreamIntensity) + ' Nm^3/h'
+        const delta = sign + Math.abs(this.state.airStreamIntensity - state.airStreamIntensity) + ' Nm^3/h'
+        this.deltaState.airStreamIntensity = delta
         this.airStreamIntensityChanged = true;
+        this.events.push({
+          parameter: "Intensywność SPD",
+          date: new Date().toLocaleString(),
+          oldValue: this.state.airStreamIntensity.toFixed(2),
+          newValue: state.airStreamIntensity.toFixed(2),
+          delta: delta
+        })
       }
       if (this.state.oxygenPercentage !== state.oxygenPercentage) {
         const sign = this.state.oxygenPercentage < state.oxygenPercentage ? '+' : '-';
+        const delta = sign + Math.abs(this.state.airStreamIntensity - state.airStreamIntensity) + ' Nm^3/h'
         this.deltaState.oxygenPercentage = sign + Math.abs(this.state.oxygenPercentage - state.oxygenPercentage) + ' %'
         this.oxygenPercentageChanged = true;
+        this.events.push({
+          parameter: "Stężenie tlenu",
+          date: new Date().toLocaleString(),
+          oldValue: this.state.oxygenPercentage.toFixed(2),
+          newValue: state.oxygenPercentage.toFixed(2),
+          delta: delta
+        })
       }
       this.state = state;
     })
 
-
-
-    this.smeltingService.getSmeltingEvents().subscribe(events => {
-      this.events = events;
-    })
 
 
     const gradientChartOptionsConfigurationWithTooltipRed: any = {
