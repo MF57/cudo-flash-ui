@@ -11,8 +11,16 @@ tr td.minus, .minus {
   color: $red !important;
 }
 
+.diagram-card {
+  position: relative;
+}
+
+.all-wrapper {
+  display: flex;
+}
 
 .diagram-wrapper {
+  margin-left: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,9 +28,8 @@ tr td.minus, .minus {
 }
 
 img.diagram {
-  margin: 50px auto 50px auto;
-  width: 500px;
-  height: 500px;
+  width: 750px;
+  height: 750px;
 }
 
 
@@ -30,10 +37,13 @@ img.diagram {
 
 .variables {
   display: flex;
+  width: 500px;
+  height: 100%;
+  margin-top: 300px
 }
 
 .value-wrapper {
-  margin: 10px;
+  margin: 70px 10px 70px 10px;
   height: 50px;
 }
 
@@ -51,7 +61,7 @@ img.diagram {
 }
 
 .delta {
-  margin: 10px 0 10px 30px;
+  margin: 70px 0 70px 30px;
   height: 50px;
   line-height: 50px;
   font-size: 30px;
@@ -59,6 +69,25 @@ img.diagram {
 
 .value-value.recently-changed {
   opacity: 1;
+}
+
+
+
+.path {
+  position: absolute;
+}
+
+.path.oxygen-pointer {
+  top: 444px;
+}
+
+.path.velocity-pointer {
+  top: 570px;
+}
+
+
+.path.intensity-pointer {
+  top: 680px;
 }
 
 
