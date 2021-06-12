@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {generate, interval, Observable, of, timer} from 'rxjs';
+import {Observable, timer} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
@@ -101,7 +101,14 @@ export class SmeltingService {
     if (environment.production) {
       return timer(0, 1000).pipe(
         switchMap(() => {
-            return this.httpClient.get<SmeltingState>('https://tegess.com/variables', {responseType: 'json'})
+            return this.httpClient.get<SmeltingApiResponse>('https://tegess.com/currentSetValues', {responseType: 'json'})
+              .pipe(map(resp => {
+                return {
+                  airVelocity: resp.values[0],
+                  oxygenPercentage: resp.values[1],
+                  airStreamIntensity: resp.values[2]
+                }
+              }))
           }
         )
       )
@@ -145,14 +152,14 @@ export class SmeltingService {
   }
 
   start() {
-    this.httpClient.get('https://tegess.com/start/'+this.expectedHeatlossValue).subscribe(() =>{
-      console.log("Simulation started")
+    this.httpClient.get('https://tegess.com/start/' + this.expectedHeatlossValue).subscribe(() => {
+      console.log('Simulation started')
     })
   }
 
   stop() {
     this.httpClient.get('https://tegess.com/stop').subscribe(() => {
-      console.log("Simulation stopped")
+      console.log('Simulation stopped')
     })
   }
 }
@@ -164,6 +171,10 @@ export interface SmeltingEvent {
   oldValue: string
   newValue: string
   delta: string
+}
+
+export interface SmeltingApiResponse {
+  values: number[];
 }
 
 export interface SmeltingState {
