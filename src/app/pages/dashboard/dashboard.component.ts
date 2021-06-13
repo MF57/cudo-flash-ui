@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
       this.airStreamIntensityChanged = false;
       if (this.state.airVelocity !== state.airVelocity) {
         const sign = this.state.airVelocity < state.airVelocity ? '+' : '-';
-        const delta = sign + Math.abs(this.state.airVelocity - state.airVelocity) + ' m/s';
+        const delta = sign + Math.abs(this.state.airVelocity - state.airVelocity).toFixed(2) + ' m/s';
         this.deltaState.airVelocity = delta
         this.airVelocityChanged = true;
         this.events.push({
@@ -78,7 +78,7 @@ export class DashboardComponent implements OnInit {
       }
       if (this.state.airStreamIntensity !== state.airStreamIntensity) {
         const sign = this.state.airStreamIntensity < state.airStreamIntensity ? '+' : '-';
-        const delta = sign + Math.abs(this.state.airStreamIntensity - state.airStreamIntensity) + ' Nm^3/h'
+        const delta = sign + Math.abs(this.state.airStreamIntensity - state.airStreamIntensity).toFixed(2) + ' Nm^3/h'
         this.deltaState.airStreamIntensity = delta
         this.airStreamIntensityChanged = true;
         this.events.push({
@@ -91,8 +91,8 @@ export class DashboardComponent implements OnInit {
       }
       if (this.state.oxygenPercentage !== state.oxygenPercentage) {
         const sign = this.state.oxygenPercentage < state.oxygenPercentage ? '+' : '-';
-        const delta = sign + Math.abs(this.state.airStreamIntensity - state.airStreamIntensity) + ' Nm^3/h'
-        this.deltaState.oxygenPercentage = sign + Math.abs(this.state.oxygenPercentage - state.oxygenPercentage) + ' %'
+        const delta = sign + Math.abs(this.state.oxygenPercentage - state.oxygenPercentage) + ' %'
+        this.deltaState.oxygenPercentage = sign + Math.abs(this.state.oxygenPercentage - state.oxygenPercentage).toFixed(2) + ' %'
         this.oxygenPercentageChanged = true;
         this.events.push({
           parameter: "Stężenie tlenu",
