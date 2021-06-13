@@ -68,7 +68,10 @@ export class DashboardComponent implements OnInit {
         const delta = sign + Math.abs(this.state.airVelocity - state.airVelocity).toFixed(2) + ' m/s';
         this.deltaState.airVelocity = delta
         this.airVelocityChanged = true;
-        this.events.push({
+        if(this.events.length > 100) {
+          this.events.pop()
+        }
+        this.events.unshift({
           parameter: "Prędkość podmuchu",
           date: new Date().toLocaleString(),
           oldValue: this.state.airVelocity.toFixed(2),
@@ -81,7 +84,10 @@ export class DashboardComponent implements OnInit {
         const delta = sign + Math.abs(this.state.airStreamIntensity - state.airStreamIntensity).toFixed(2) + ' Nm^3/h'
         this.deltaState.airStreamIntensity = delta
         this.airStreamIntensityChanged = true;
-        this.events.push({
+        if(this.events.length > 100) {
+          this.events.pop()
+        }
+        this.events.unshift({
           parameter: "Intensywność SPD",
           date: new Date().toLocaleString(),
           oldValue: this.state.airStreamIntensity.toFixed(2),
@@ -94,7 +100,10 @@ export class DashboardComponent implements OnInit {
         const delta = sign + Math.abs(this.state.oxygenPercentage - state.oxygenPercentage).toFixed(2) + ' %'
         this.deltaState.oxygenPercentage = delta
         this.oxygenPercentageChanged = true;
-        this.events.push({
+        if(this.events.length > 100) {
+          this.events.pop()
+        }
+        this.events.unshift({
           parameter: "Stężenie tlenu",
           date: new Date().toLocaleString(),
           oldValue: this.state.oxygenPercentage.toFixed(2),
